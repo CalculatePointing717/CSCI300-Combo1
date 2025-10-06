@@ -28,7 +28,10 @@ class CGame
         delete rnd;
         delete table;
         delete deck;
-        for (auto p : players) delete p;
+        for (auto p : players)
+        {
+            delete p;
+        }
         delete available;
     }
 
@@ -241,7 +244,10 @@ class CGame
         {
             std::cout << "Winner: " << players[0]->name << "\n";
             std::cout << players[1]->name << " left with " << s1 << " tiles: ";
-            for (auto &t : *players[1]->hand) std::cout << tile_to_string(t) << " ";
+            for (auto &t : *players[1]->hand)
+            {
+                std::cout << tile_to_string(t) << " ";
+            }
             std::cout << "\n";
         }
         
@@ -250,7 +256,10 @@ class CGame
         {
             std::cout << "Winner: " << players[1]->name << "\n";
             std::cout << players[0]->name << " left with " << s0 << " tiles: ";
-            for (auto &t : *players[0]->hand) std::cout << tile_to_string(t) << " ";
+            for (auto &t : *players[0]->hand)
+            {
+                std::cout << tile_to_string(t) << " ";
+            }
             std::cout << "\n";
         }
         
@@ -269,7 +278,10 @@ class CGame
             {
                 std::cout << "Deadlocked. Winner by fewer tiles: " << players[1]->name << "\n";
                 std::cout << players[0]->name << " left with " << s0 << " tiles: ";
-                for (auto &t : *players[0]->hand) std::cout << tile_to_string(t) << " ";
+                for (auto &t : *players[0]->hand)
+                {
+                    std::cout << tile_to_string(t) << " ";
+                }
                 std::cout << "\n";
             } 
             

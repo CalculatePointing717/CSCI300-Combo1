@@ -35,14 +35,22 @@ class CTable
     // Value to match on front/head.
     int head_value() const
     {
-        if (table.empty()) return -1;
+        if (table.empty())
+        {
+            return -1;
+        }
+
         return table.front().first;
     }
 
     // Value to match on back/tail.
     int tail_value() const
     {
-        if (table.empty()) return -1;
+        if (table.empty())
+        {
+            return -1;
+        }
+        
         return table.back().second;
     }
 

@@ -27,7 +27,8 @@ class CPlayer
     }
 
     // Remove tile at index.
-    DominoTile remove_at(int index) {
+    DominoTile remove_at(int index)
+    {
         DominoTile p = hand->at(index);
         hand->erase(hand->begin() + index);
 
@@ -46,7 +47,11 @@ class CPlayer
         for (int i = 0; i < (int)hand->size(); ++i)
         {
             int a = hand->at(i).first, b = hand->at(i).second;
-            if (a == head_val || b == head_val || a == tail_val || b == tail_val) return i;
+
+            if (a == head_val || b == head_val || a == tail_val || b == tail_val)
+            {
+                return i;
+            }
         }
 
         return -1;

@@ -28,9 +28,9 @@ class CGame
         delete rnd;
         delete table;
         delete deck;
-        for (auto p : players)
+        for (auto tile : players)
         {
-            delete p;
+            delete tile;
         }
         delete available;
     }
@@ -103,14 +103,14 @@ class CGame
         return rnd->random_int(0,1);
     }
 
-    // Select first piece.
+    // Select first tile.
     void first_piece(int starter)
     {
         int size = players[starter]->hand_size();
         int index = rnd->random_int(0, size-1);
-        DominoTile p = players[starter]->remove_at(index);
-        table->place_back(p);
-        std::cout << players[starter]->name << " places first tile " << tile_to_string(p) << "\n";
+        DominoTile tile = players[starter]->remove_at(index);
+        table->place_back(tile);
+        std::cout << players[starter]->name << " places first tile " << tile_to_string(tile) << "\n";
         table->display_table();
     }
 
@@ -159,10 +159,10 @@ class CGame
         int headVal = table->head_value();
         int tailVal = table->tail_value();
         
-        int matchIdx = player->find_matching_index(headVal, tailVal);
-        if (matchIdx != -1)
+        int matchIndex = player->find_matching_index(headVal, tailVal);
+        if (matchIndex != -1)
         {
-            DominoTile tile = player->remove_at(matchIdx);
+            DominoTile tile = player->remove_at(matchIndex);
             DominoTile oriented;
 
             if (tile.first == headVal || tile.second == headVal)
@@ -194,11 +194,11 @@ class CGame
             headVal = table->head_value();
             tailVal = table->tail_value();
 
-            int idxNow = player->find_matching_index(headVal, tailVal);
-            if (idxNow != -1)
+            int indexNow = player->find_matching_index(headVal, tailVal);
+            if (indexNow != -1)
             {
                 
-                DominoTile tile = player->remove_at(idxNow);
+                DominoTile tile = player->remove_at(indexNow);
                 DominoTile oriented;
 
                 if (tile.first == headVal || tile.second == headVal)

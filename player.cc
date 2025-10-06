@@ -21,18 +21,18 @@ class CPlayer
     }
 
     // Add tile to hand.
-    void add_tile(const DominoTile &p)
+    void add_tile(const DominoTile &tile)
     {
-        hand->push_back(p);
+        hand->push_back(tile);
     }
 
     // Remove tile at index.
     DominoTile remove_at(int index)
     {
-        DominoTile p = hand->at(index);
+        DominoTile tile = hand->at(index);
         hand->erase(hand->begin() + index);
 
-        return p;
+        return tile;
     }
 
     // Number of tiles in hand.

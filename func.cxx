@@ -7,10 +7,10 @@
 using DominoTile = std::pair<int,int>;
 
 // Convert tile to string.
-std::string tile_to_string(const DominoTile &p)
+std::string tile_to_string(const DominoTile &tile)
 {
     std::stringstream ss;
-    ss << "[" << p.first << "|" << p.second << "]";
+    ss << "[" << tile.first << "|" << tile.second << "]";
     return ss.str();
 }
 

@@ -14,16 +14,16 @@ class CTable
         table = std::vector<DominoTile>();
     }
 
-    // Place piece at front/head.
-    void place_front(const DominoTile &p)
+    // Place tile at front/head.
+    void place_front(const DominoTile &tile)
     {
-        table.insert(table.begin(), p);
+        table.insert(table.begin(), tile);
     }
 
-    // Place piece at back/tail.
-    void place_back(const DominoTile &p)
+    // Place tile at back/tail.
+    void place_back(const DominoTile &tile)
     {
-        table.push_back(p);
+        table.push_back(tile);
     }
 
     // Table empty (has no tiles).

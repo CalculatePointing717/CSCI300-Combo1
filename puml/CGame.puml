@@ -1,0 +1,23 @@
+@startuml
+!theme plain
+
+class CGame
+{
+    + CGame ()
+    + ~CGame ()
+    + play ()
+    - create_dominoes ()
+    - draw_dominoes ()
+    - who_first () : int
+    - first_piece (starter : int)
+    - run_game (starter : int)
+    - player_turn (player : CPlayer) : bool
+    - game_over ()
+    - rnd : CRandom
+    - table : CTable
+    - deck : CDominoes
+    - players : vector<CPlayer>
+    - available : vector<DominoTile>
+}
+
+@enduml

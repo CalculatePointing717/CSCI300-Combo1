@@ -1,0 +1,9 @@
+@startuml
+!theme plain
+
+struct DominoTile
+{
+    + pair<int,int>
+}
+
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+!theme plain
+
+class CTable
+{
+    + CTable ()
+    + place_front (tile : DominoTile)
+    + place_back (tile : DominoTile)
+    + empty () : bool
+    + head_value () : int
+    + tail_value () : int
+    + display_table ()
+    + get_sequence () : vector<DominoTile>
+    - table : vector<DominoTile>
+}
+
+@enduml

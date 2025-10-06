@@ -1,0 +1,13 @@
+@startuml
+!theme plain
+
+class CRandom
+{
+    + CRandom ()
+    + random_int (a : int, b : int) : int
+    + shuffle_vec (vec : vector<T>)
+    + random_pop (vec : vector<T>) : <T>
+    - rng : mt19937
+}
+
+@enduml

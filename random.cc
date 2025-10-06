@@ -5,46 +5,40 @@
 #include <random>
 #include <vector>
 #include <algorithm>
-using namespace std;
 
 class CRandom
 {
     public:
     CRandom()
     {
-        random_device rd;
-        rng = new mt19937(rd());
-    }
-
-    ~CRandom()
-    {
-        delete rng;
+        std::random_device rd;
+        rng = std::mt19937(rd());
     }
 
     // Return integer in [a,b].
-    int randint(int a, int b)
+    int random_int(int a, int b)
     {
-        uniform_int_distribution<int> dist(a, b);
-        return dist(*rng);
+        std::uniform_int_distribution<int> dist(a, b);
+        return dist(rng);
     }
 
     // Shuffle vector.
     template<typename T>
-    void shuffle_vec(vector<T>& vec)
+    void shuffle_vec(std::vector<T>& vec)
     {
-        shuffle(vec.begin(), vec.end(), *rng);
+        shuffle(vec.begin(), vec.end(), rng);
     }
 
     // Pop random index from 0 to n-1.
     template<typename T>
-    T random_pop(vector<T>& vec)
+    T random_pop(std::vector<T>& vec)
     {
-        int index = randint(0, (int)vec.size() - 1);
+        int index = random_int(0, (int)vec.size() - 1);
         T val = vec[index];
         vec.erase(vec.begin() + index);
         return val;
     }
 
     private:
-    mt19937* rng;
+    std::mt19937 rng;
 };

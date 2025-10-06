@@ -4,77 +4,72 @@
 
 #include <vector>
 #include <iostream>
-using namespace std;
-using dominoTile = pair<int,int>;
+using DominoTile = std::pair<int,int>;
 
 class CTable
 {
     public:
     CTable() 
     {
-        tableSeq = new vector<dominoTile>();
-    }
-
-    ~CTable()
-    {
-        delete tableSeq;
+        table = std::vector<DominoTile>();
     }
 
     // Place piece at front/head.
-    void place_front(const dominoTile &p)
+    void place_front(const DominoTile &p)
     {
-        tableSeq->insert(tableSeq->begin(), p);
+        table.insert(table.begin(), p);
     }
 
     // Place piece at back/tail.
-    void place_back(const dominoTile &p)
+    void place_back(const DominoTile &p)
     {
-        tableSeq->push_back(p);
+        table.push_back(p);
     }
 
     // Table empty (has no tiles).
     bool empty() const
     {
-        return tableSeq->empty();
+        return table.empty();
     }
 
     // Value to match on front/head.
     int head_value() const
     {
-        if (tableSeq->empty()) return -1;
-        return tableSeq->front().first;
+        if (table.empty()) return -1;
+        return table.front().first;
     }
 
     // Value to match on back/tail.
     int tail_value() const
     {
-        if (tableSeq->empty()) return -1;
-        return tableSeq->back().second;
+        if (table.empty()) return -1;
+        return table.back().second;
     }
 
     // Print current table sequence.
     void display_table() const
     {
-        cout << "\nTable: ";
+        std::cout << "\nTable: ";
 
-        for (size_t i = 0; i < tableSeq->size(); ++i)
+        for (size_t i = 0; i < table.size(); ++i)
         {
-            cout << "[" << tableSeq->at(i).first << "|" << tableSeq->at(i).second << "]";
-            if (i + 1 < tableSeq->size())
+            std::cout << "[" << table.at(i).first << "|" << table.at(i).second << "]";
+
+            if (i + 1 < table.size())
             {
-                cout << "-";
+                std::cout << "-";
             }
         }
 
-        cout << "\n";
+        std::cout << "\n";
     }
 
     // Return internal table sequence.
-    vector<dominoTile> get_sequence() const
+    std::vector<DominoTile> get_sequence() const
     {
-        return *tableSeq;
+        return table;
     }
 
     private:
-    vector<dominoTile>* tableSeq;
+    std::vector<DominoTile> table;
 };

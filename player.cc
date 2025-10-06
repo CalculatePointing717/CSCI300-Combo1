@@ -5,15 +5,14 @@
 #include <string>
 #include <vector>
 #include <iostream>
-using namespace std;
-using dominoTile = pair<int,int>;
+using DominoTile = std::pair<int,int>;
 
 class CPlayer
 {
     public:
-    CPlayer(const string& n) : name(n)
+    CPlayer(const std::string& n) : name(n)
     {
-        hand = new vector<dominoTile>();
+        hand = new std::vector<DominoTile>();
     }
 
     ~CPlayer()
@@ -22,14 +21,14 @@ class CPlayer
     }
 
     // Add tile to hand.
-    void add_tile(const dominoTile &p)
+    void add_tile(const DominoTile &p)
     {
         hand->push_back(p);
     }
 
     // Remove tile at index.
-    dominoTile remove_at(int index) {
-        dominoTile p = hand->at(index);
+    DominoTile remove_at(int index) {
+        DominoTile p = hand->at(index);
         hand->erase(hand->begin() + index);
 
         return p;
@@ -54,17 +53,18 @@ class CPlayer
     }
 
     // Print hand.
-    void display_hand() const {
-        cout << name << "'s hand (" << hand_size() << "): ";
+    void display_hand() const
+    {
+        std::cout << name << "'s hand (" << hand_size() << "): ";
 
         for (auto &t : *hand)
         {
-            cout << "[" << t.first << "|" << t.second << "] ";
+            std::cout << "[" << t.first << "|" << t.second << "] ";
         }
 
-        cout << "\n";
+        std::cout << "\n";
     }
 
-    string name;
-    vector<dominoTile>* hand;
+    std::string name;
+    std::vector<DominoTile>* hand;
 };

@@ -7,8 +7,7 @@
 #include "table.cc"
 #include "domino.cc"
 #include "func.cxx"
-using namespace std;
-using dominoTile = pair<int,int>;
+using DominoTile = std::pair<int,int>;
 
 class CGame
 {
@@ -21,7 +20,7 @@ class CGame
         deck = new CDominoes();
         players.push_back(new CPlayer("Player 1"));
         players.push_back(new CPlayer("Player 2"));
-        available = new vector<dominoTile>();
+        available = new std::vector<DominoTile>();
     }
 
     ~CGame()
@@ -39,7 +38,7 @@ class CGame
         create_dominoes();
         draw_dominoes();
         int starter = who_first();
-        cout << "Starting player: " << players[starter]->name << "\n";
+        std::cout << "Starting player: " << players[starter]->name << "\n";
         first_piece(starter);
         run_game(starter);
         game_over();
@@ -50,13 +49,13 @@ class CGame
     CRandom* rnd;
     CTable* table;
     CDominoes* deck;
-    vector<CPlayer*> players;
-    vector<dominoTile>* available;
+    std::vector<CPlayer*> players;
+    std::vector<DominoTile>* available;
 
     // Put shuffled set into available pool.
     void create_dominoes()
     {
-        vector<dominoTile> all = deck->pieces;
+        std::vector<DominoTile> all = deck->tiles;
         rnd->shuffle_vec(all);
         available->clear();
         available->insert(available->end(), all.begin(), all.end());
@@ -65,50 +64,50 @@ class CGame
     // Give each player 10 tiles, put remaining into available.
     void draw_dominoes()
     {
-        vector<dominoTile> pool = *available;
+        std::vector<DominoTile> pool = *available;
         players[0]->hand->clear();
         players[1]->hand->clear();
         for (int i = 0; i < 10; ++i)
         {
-            dominoTile t = rnd->random_pop(pool);
+            DominoTile t = rnd->random_pop(pool);
             players[0]->add_tile(t);
         }
         for (int i = 0; i < 10; ++i)
         {
-            dominoTile t = rnd->random_pop(pool);
+            DominoTile t = rnd->random_pop(pool);
             players[1]->add_tile(t);
         }
         available->clear();
         available->insert(available->end(), pool.begin(), pool.end());
 
-        cout << "Initial hands and available pieces:\n\n";
+        std::cout << "Initial hands and available tiles:\n\n";
         players[0]->display_hand();
         players[1]->display_hand();
 
-        cout << "Available (" << available->size() << "): ";
+        std::cout << "Available (" << available->size() << "): ";
 
         for (auto &t : *available)
         {
-            cout << tile_to_str(t) << " ";
+            std::cout << tile_to_string(t) << " ";
         }
 
-        cout << "\n\n";
+        std::cout << "\n\n";
     }
 
     // Select starting player.
     int who_first()
     {
-        return rnd->randint(0,1);
+        return rnd->random_int(0,1);
     }
 
     // Select first piece.
     void first_piece(int starter)
     {
-        int sz = players[starter]->hand_size();
-        int index = rnd->randint(0, sz-1);
-        dominoTile p = players[starter]->remove_at(index);
+        int size = players[starter]->hand_size();
+        int index = rnd->random_int(0, size-1);
+        DominoTile p = players[starter]->remove_at(index);
         table->place_back(p);
-        cout << players[starter]->name << " places first tile " << tile_to_str(p) << "\n";
+        std::cout << players[starter]->name << " places first tile " << tile_to_string(p) << "\n";
         table->display_table();
     }
 
@@ -120,14 +119,14 @@ class CGame
 
         while (true)
         {
-            CPlayer* pl = players[current];
-            cout << "\n" << pl->name << "'s turn.\n";
-            pl->display_hand();
-            bool playedThisTurn = player_turn(pl);
+            CPlayer* player = players[current];
+            std::cout << "\n" << player->name << "'s turn.\n";
+            player->display_hand();
+            bool playedThisTurn = player_turn(player);
 
-            if (pl->hand_size() == 0)
+            if (player->hand_size() == 0)
             {
-                cout << pl->name << " has placed all tiles and wins!\n";
+                std::cout << player->name << " has placed all tiles!\n";
                 break;
             }
 
@@ -143,7 +142,7 @@ class CGame
 
             if (consecutive_passes >= 2)
             {
-                cout << "Both players passed consecutively. Game is deadlocked.\n";
+                std::cout << "Both players passed consecutively. Game is deadlocked.\n";
                 break;
             }
 
@@ -152,29 +151,29 @@ class CGame
     }
 
     // Run player turn.
-    bool player_turn(CPlayer* pl)
+    bool player_turn(CPlayer* player)
     {
         int headVal = table->head_value();
         int tailVal = table->tail_value();
         
-        int matchIdx = pl->find_matching_index(headVal, tailVal);
+        int matchIdx = player->find_matching_index(headVal, tailVal);
         if (matchIdx != -1)
         {
-            dominoTile tile = pl->remove_at(matchIdx);
-            dominoTile oriented;
+            DominoTile tile = player->remove_at(matchIdx);
+            DominoTile oriented;
 
             if (tile.first == headVal || tile.second == headVal)
             {
                 oriented = orient_for_head(tile, headVal);
                 table->place_front(oriented);
-                cout << pl->name << " plays " << tile_to_str(oriented) << " at head (matching " << headVal << ")\n";
+                std::cout << player->name << " plays " << tile_to_string(oriented) << " at head (matching " << headVal << ")\n";
             } 
             
             else
             {
                 oriented = orient_for_tail(tile, tailVal);
                 table->place_back(oriented);
-                cout << pl->name << " plays " << tile_to_str(oriented) << " at tail (matching " << tailVal << ")\n";
+                std::cout << player->name << " plays " << tile_to_string(oriented) << " at tail (matching " << tailVal << ")\n";
             }
 
             table->display_table();
@@ -185,32 +184,32 @@ class CGame
         while (!available->empty())
         {
             
-            dominoTile drawn = rnd->random_pop(*available);
-            pl->add_tile(drawn);
-            cout << pl->name << " draws " << tile_to_str(drawn) << " (" << available->size() << " remaining)\n";
+            DominoTile drawn = rnd->random_pop(*available);
+            player->add_tile(drawn);
+            std::cout << player->name << " draws " << tile_to_string(drawn) << " (" << available->size() << " remaining)\n";
         
             headVal = table->head_value();
             tailVal = table->tail_value();
 
-            int idxNow = pl->find_matching_index(headVal, tailVal);
+            int idxNow = player->find_matching_index(headVal, tailVal);
             if (idxNow != -1)
             {
                 
-                dominoTile tile = pl->remove_at(idxNow);
-                dominoTile oriented;
+                DominoTile tile = player->remove_at(idxNow);
+                DominoTile oriented;
 
                 if (tile.first == headVal || tile.second == headVal)
                 {
                     oriented = orient_for_head(tile, headVal);
                     table->place_front(oriented);
-                    cout << pl->name << " plays drawn tile " << tile_to_str(oriented) << " at head\n";
+                    std::cout << player->name << " plays drawn tile " << tile_to_string(oriented) << " at head\n";
                 } 
                 
                 else
                 {
                     oriented = orient_for_tail(tile, tailVal);
                     table->place_back(oriented);
-                    cout << pl->name << " plays drawn tile " << tile_to_str(oriented) << " at tail\n";
+                    std::cout << player->name << " plays drawn tile " << tile_to_string(oriented) << " at tail\n";
                 }
 
                 table->display_table();
@@ -220,14 +219,16 @@ class CGame
             
         }
         
-        cout << pl->name << " cannot play and no available tiles left. Pass.\n";
+        std::cout << player->name << " cannot play and no available tiles left. Pass.\n";
         return false;
     }
 
     // End of game. Print summary.
     void game_over() 
     {
-        cout << "\n[[ Game Over - Final Results ]]\n";
+        std::cout << "\n---------------------------------";
+        std::cout << "\n    Game Over - Final Results    ";
+        std::cout << "\n---------------------------------\n";
 
         table->display_table();
         players[0]->display_hand();
@@ -238,19 +239,19 @@ class CGame
         // P0 wins.
         if (s0 == 0)
         {
-            cout << "Winner: " << players[0]->name << "\n";
-            cout << players[1]->name << " left with " << s1 << " tiles: ";
-            for (auto &t : *players[1]->hand) cout << tile_to_str(t) << " ";
-            cout << "\n";
+            std::cout << "Winner: " << players[0]->name << "\n";
+            std::cout << players[1]->name << " left with " << s1 << " tiles: ";
+            for (auto &t : *players[1]->hand) std::cout << tile_to_string(t) << " ";
+            std::cout << "\n";
         }
         
         // P1 wins.
         else if (s1 == 0)
         {
-            cout << "Winner: " << players[1]->name << "\n";
-            cout << players[0]->name << " left with " << s0 << " tiles: ";
-            for (auto &t : *players[0]->hand) cout << tile_to_str(t) << " ";
-            cout << "\n";
+            std::cout << "Winner: " << players[1]->name << "\n";
+            std::cout << players[0]->name << " left with " << s0 << " tiles: ";
+            for (auto &t : *players[0]->hand) std::cout << tile_to_string(t) << " ";
+            std::cout << "\n";
         }
         
         // Deadlocked: Fewer tiles wins, if equal then tied.
@@ -258,33 +259,33 @@ class CGame
         {
             if (s0 < s1)
             {
-                cout << "Deadlocked. Winner by fewer tiles: " << players[0]->name << "\n";
-                cout << players[1]->name << " left with " << s1 << " tiles: ";
-                for (auto &t : *players[1]->hand) cout << tile_to_str(t) << " ";
-                cout << "\n";
+                std::cout << "Deadlocked. Winner by fewer tiles: " << players[0]->name << "\n";
+                std::cout << players[1]->name << " left with " << s1 << " tiles: ";
+                for (auto &t : *players[1]->hand) std::cout << tile_to_string(t) << " ";
+                std::cout << "\n";
             }
             
             else if (s1 < s0)
             {
-                cout << "Deadlocked. Winner by fewer tiles: " << players[1]->name << "\n";
-                cout << players[0]->name << " left with " << s0 << " tiles: ";
-                for (auto &t : *players[0]->hand) cout << tile_to_str(t) << " ";
-                cout << "\n";
+                std::cout << "Deadlocked. Winner by fewer tiles: " << players[1]->name << "\n";
+                std::cout << players[0]->name << " left with " << s0 << " tiles: ";
+                for (auto &t : *players[0]->hand) std::cout << tile_to_string(t) << " ";
+                std::cout << "\n";
             } 
             
             else
             {
-                cout << "Deadlocked. Tied. Equal number of tiles: (" << s0 << ").\n";
+                std::cout << "Deadlocked. Tied. Equal number of tiles: (" << s0 << ").\n";
             }
         }
 
-        cout << "\nAvailable pile remaining (" << available->size() << "): ";
+        std::cout << "\nAvailable pile remaining (" << available->size() << "): ";
 
         for (auto &t : *available)
         {
-            cout << tile_to_str(t) << " ";
+            std::cout << tile_to_string(t) << " ";
         }
 
-        cout << "\n";
+        std::cout << "\n";
     }
 };

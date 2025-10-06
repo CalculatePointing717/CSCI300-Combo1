@@ -1,0 +1,68 @@
+@startuml
+
+struct DominoTile
+{
+    + pair<int,int>
+}
+
+class CRandom
+{
+    + CRandom ()
+    + random_int (a : int, b : int) : int
+    + shuffle_vec (vec : vector<T>)
+    + random_pop (vec : vector<T>) : <T>
+    - rng : mt19937
+}
+
+class CTable
+{
+    + CTable ()
+    + place_front (p : DominoTile)
+    + place_back (p : DominoTile)
+    + empty () : bool
+    + head_value () : int
+    + tail_value () : int
+    + display_table ()
+    + get_sequence () : vector<DominoTile>
+    - table : vector<DominoTile>
+}
+
+class CDominoes
+{
+    + CDominoes ()
+    - tiles : vector<DominoTile>
+}
+
+class CPlayer
+{
+    + CPlayer ()
+    + ~CPlayer()
+    + add_tile (p : DominoTile)
+    + remove_at (index : int) : DominoTile
+    + hand_size () : int
+    + find_matching_index (head_val : int, tail_val : int) : int
+    + display_hand ()
+    + name : string
+    + hand : vector<DominoTile>
+}
+
+class CGame
+{
+    + CGame ()
+    + ~CGame ()
+    + play ()
+    - create_dominoes ()
+    - draw_dominoes ()
+    - who_first () : int
+    - first_piece (starter : int)
+    - run_game (starter : int)
+    - player_turn (player : CPlayer) : bool
+    - game_over ()
+    - rnd : CRandom
+    - table : CTable
+    - deck : CDominoes
+    - players : vector<CPlayer>
+    - available : vector<DominoTile>
+}
+
+@enduml

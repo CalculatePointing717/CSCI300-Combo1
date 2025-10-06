@@ -5,7 +5,7 @@ An auto-playing, text-based dominoes game written in C++
 
 With g++ installed you can use the provided script: `make.sh`
 
-Alternatively, you can use this command: `g++ dominoes-game.cpp -o game.bin`
+Alternatively, you can use this command: `g++ game.cpp -o game.bin`
 
 
 

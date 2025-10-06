@@ -1,0 +1,10 @@
+@startuml
+!theme plain
+
+class CDominoes
+{
+    + CDominoes ()
+    - tiles : vector<DominoTile>
+}
+
+@enduml

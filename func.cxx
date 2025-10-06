@@ -4,49 +4,48 @@
 
 #include <string>
 #include <sstream>
-using namespace std;
-using dominoTile = pair<int,int>;
+using DominoTile = std::pair<int,int>;
 
 // Convert tile to string.
-string tile_to_str(const dominoTile &p)
+std::string tile_to_string(const DominoTile &tile)
 {
-    stringstream ss;
-    ss << "[" << p.first << "|" << p.second << "]";
+    std::stringstream ss;
+    ss << "[" << tile.first << "|" << tile.second << "]";
     return ss.str();
 }
 
 // Try to orient tile for placement at front/head.
-dominoTile orient_for_head(const dominoTile &tile, int headVal)
+DominoTile orient_for_head(const DominoTile &tile, int headVal)
 {
     int a = tile.first, b = tile.second;
 
     if (b == headVal)
     {
-        return dominoTile(a,b);
+        return DominoTile(a,b);
     }
     
     else if (a == headVal)
     {
-        return dominoTile(b,a);
+        return DominoTile(b,a);
     }
 
-    return dominoTile(-1,-1);
+    return DominoTile(-1,-1);
 }
 
 // Try to orient tile for placement at back/tail.
-dominoTile orient_for_tail(const dominoTile &tile, int tailVal)
+DominoTile orient_for_tail(const DominoTile &tile, int tailVal)
 {
     int a = tile.first, b = tile.second;
 
     if (a == tailVal)
     {
-        return dominoTile(a,b);
+        return DominoTile(a,b);
     } 
     
     else if (b == tailVal) 
     {
-        return dominoTile(b,a);
+        return DominoTile(b,a);
     }
 
-    return dominoTile(-1,-1);
+    return DominoTile(-1,-1);
 }

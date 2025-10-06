@@ -1,0 +1,17 @@
+@startuml
+!theme plain
+
+class CPlayer
+{
+    + CPlayer ()
+    + ~CPlayer()
+    + add_tile (tile : DominoTile)
+    + remove_at (index : int) : DominoTile
+    + hand_size () : int
+    + find_matching_index (head_val : int, tail_val : int) : int
+    + display_hand ()
+    + name : string
+    + hand : vector<DominoTile>
+}
+
+@enduml

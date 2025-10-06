@@ -1,18 +1,6 @@
 # CSCI300 Combo #1: Dominoes Game
 An auto-playing, text-based dominoes game written in C++
 
-## Features
-
-Automatic Gameplay
-
-Text-Based Interface
-
-Random Uniform Distribution
-
-End-of-Game Summary
-
-
-
 ## Compiling
 
 With g++ installed you can use the provided script: `make.sh`

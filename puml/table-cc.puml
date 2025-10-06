@@ -1,0 +1,21 @@
+@startuml
+
+struct DominoTile
+{
+    + pair<int,int>
+}
+
+class CTable
+{
+    + CTable ()
+    + place_front (p : DominoTile)
+    + place_back (p : DominoTile)
+    + empty () : bool
+    + head_value () : int
+    + tail_value () : int
+    + display_table ()
+    + get_sequence () : vector<DominoTile>
+    - table : vector<DominoTile>
+}
+
+@enduml

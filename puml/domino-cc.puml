@@ -1,0 +1,14 @@
+@startuml
+
+struct DominoTile
+{
+    + pair<int,int>
+}
+
+class CDominoes
+{
+    + CDominoes ()
+    - tiles : vector<DominoTile>
+}
+
+@enduml
